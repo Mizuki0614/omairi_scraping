@@ -6,6 +6,13 @@ import time
 #first_page = "https://omairi.club/spots/ranking"
 
 def get_urls(first_page):
+    """
+    "神社・お寺ランキング"の1ページ目のURLを受け取って、すべてのお寺・神社、個々のURLを返す関数
+
+    :global None:
+    :param first_page:
+    :return iterator(personal_url):
+    """
 
     first_page_url = requests.get(first_page)
     html_first = lxml.html.fromstring(first_page_url.text)
@@ -32,9 +39,9 @@ def get_urls(first_page):
 
         # 子ループ:親ループで取得したURLをスクレイピングし詳細ページのURL(individual_url)を作る
         for a in html_page_url.cssselect("div.spot_ranking >a"):
-            individual_url = "https://omairi.club" + str(a.get('href'))
+            personal_url = "https://omairi.club" + str(a.get('href'))
 
-            yield individual_url
+            yield personal_url
 
 
 # first_page = "https://omairi.club/spots/ranking"
