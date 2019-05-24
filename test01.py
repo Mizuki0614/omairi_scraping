@@ -1,6 +1,6 @@
 import requests
 import lxml.html
-import time
+
 
 # ex)花園稲荷神社(https://omairi.club/spots/78003)
 url = "https://omairi.club/spots/78003"
@@ -49,3 +49,7 @@ print(photo_package)
 print(phone_package)
 print(hp_url)
 print(goshuin_url)
+
+
+#項目がない場合のIndexErrorは考えていない
+# ex)海禅寺(url = "https://omairi.club/spots/92651")
