@@ -3,7 +3,6 @@ import lxml.html
 import re
 import time
 
-#first_page = "https://omairi.club/spots/ranking"
 
 def get_urls(first_page):
     """
