@@ -29,7 +29,9 @@ omairi.comで
 
 を抽出してEXCEL化したい。
 
+
 --------------------------------------------------------
+
 
 "神社・お寺ランキング(https://omairi.club/spots/ranking)"から、すべてのURLの取得
 
@@ -55,8 +57,7 @@ omairi.comで
 
 最後のページの取得
 
-→・　ul.pagination > li.total-page > span.total-page-num のtext_content()から 
-"1/1577" が取得可
+→・　ul.pagination > li.total-page > span.total-page-num のtext_content()から "1/577" が取得可
 
 　・　ul.pagination > li.last-page > a のget('href')で/spots以下の相対URLが取得可
 
@@ -97,3 +98,5 @@ omairi.comで
 上記で実装すると、トピックにより項目のズレがあるため、KeyErrorが多発
 
 →出力をDBではなく、ほかに考える
+
+→csvで実装、unique_kyeのみDB:`omairi`, TABLE:`keys`に格納

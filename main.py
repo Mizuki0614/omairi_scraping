@@ -41,7 +41,7 @@ def main():
 
                 #topicに対してcsv形式で書き出しを行う
                 writer.writerow(topic)
-                print("---ADDED ONE ITEM INTO THE TABLE---\n")
+                print("---ONE ITEM WAS WRITTEN TO CSV FILE---\n")
 
         conn.commit()
 

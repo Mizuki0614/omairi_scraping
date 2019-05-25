@@ -10,7 +10,6 @@ def get_key(personal_url):
     unique_key = re.search(r'/(\d+)',personal_url)
     return unique_key.group(1)
 
-
 # personal_url = "https://omairi.club/spots/77916"
 #
 # print(get_key(personal_url))

@@ -2,7 +2,6 @@ import requests
 import lxml.html
 
 
-
 def get_detail_topics(personal_url):
     """
     お寺・神社のURLを受け取って、取得した情報をdict形式で返す関数
