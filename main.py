@@ -8,61 +8,44 @@ import test03
 
 
 def main():
-
     first_page = "https://omairi.club/spots/ranking"
 
     conn = MySQLdb.connect(db='omairi', user='fine', passwd='fine', charset='utf8mb4')
     c = conn.cursor()
 
+    #TABLE:`keys`の作成
     c.execute("""
             CREATE TABLE IF NOT EXISTS `keys`(
             `url` varchar(100),
             `key` varchar(20)
             )""")
 
-    #詳細情報の出力をMySQL→csv
-    # c.execute("""
-    #         CREATE TABLE IF NOT EXISTS `omairi_package`(
-    #         `[名称]` varchar(100),
-    #         `[住所]` varchar(200),
-    #         `[寺社人気ランキング（都道府県）]` varchar(10),
-    #         `[寺社人気ランキング（全国）]` varchar(10),
-    #         `[アクセス数]` varchar(20),
-    #         `[写真数]` varchar(10),
-    #         `[電話番号]` varchar(20),
-    #         `[URL]` varchar(100),
-    #         `[御朱印の有無]` varchar(10),
-    #         `[御朱印写真のURL]` varchar(100)
-    #         )""")
-    
-
     #csvを開いた状態でループに入る
+    with open('Omairi_Information.csv', 'w', newline='') as csvfile:
+        fieldnames = ['[名称]', '[住所]', '[寺社人気ランキング（都道府県）]', '[寺社人気ランキング（全国）]', '[アクセス数]', '[写真数]', '[電話番号]', '[URL]', '[御朱印の有無]', '[御朱印写真のURL]']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-    for i in test02.get_urls(first_page):
-        unique_key = test03.get_key(i)
+        #ヘッダーの出力
+        writer.writeheader()
 
-        a = c.execute("SELECT * FROM `keys` WHERE `key`=%s", (unique_key,))
+        for i in test02.get_urls(first_page):
+            unique_key = test03.get_key(i)
 
-        if a == 0:
-            time.sleep(1)
-            c.execute("INSERT INTO `keys` VALUES (%s, %s)", (i, unique_key))
+            a = c.execute("SELECT * FROM `keys` WHERE `key`=%s", (unique_key,))
 
-            topic = test01.get_detail_topics(i)
+            if a == 0:
+                time.sleep(1)
+                c.execute("INSERT INTO `keys` VALUES (%s, %s)", (i, unique_key))
 
-            # sql_omairi_package = "INSERT INTO `omairi_package` VALUES (%([名称])s,%([住所])s,%([寺社人気ランキング（都道府県）])s,%([寺社人気ランキング（全国）])s,%([アクセス数])s,%([写真数])s,%([電話番号])s,%([URL])s,%([御朱印の有無])s,%([御朱印写真のURL])s,)"
-            # c.execute(sql_omairi_package, topic)
+                topic = test01.get_detail_topics(i)
 
-            #topicに対してcsv形式で書き出しを行う
-
-            print(topic)
-            print("---ADDED ONE ITEM INTO THE TABLE---\n")
-
+                #topicに対してcsv形式で書き出しを行う
+                writer.writerow(topic)
+                print("---ADDED ONE ITEM INTO THE TABLE---\n")
 
         conn.commit()
 
     conn.close()
-
-    #ループが終了したらcsvファイルを閉じる
 
 
 if __name__ == "__main__":
