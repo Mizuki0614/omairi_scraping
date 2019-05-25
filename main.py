@@ -40,7 +40,7 @@ def main():
 
         if a == 0:
             time.sleep(1)
-            c.execute("INSERT INTO `keys` VALUES (%s, %s)", (a, unique_key))
+            c.execute("INSERT INTO `keys` VALUES (%s, %s)", (i, unique_key))
 
             topic = test01.get_detail_topics(i)
 
