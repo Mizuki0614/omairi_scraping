@@ -1,5 +1,6 @@
 import MySQLdb
 import time
+import datetime
 import csv
 
 import test01
@@ -34,7 +35,7 @@ def main():
             a = c.execute("SELECT * FROM `keys` WHERE `key`=%s", (unique_key,))
 
             if a == 0:
-                time.sleep(1)
+                time.sleep(0.5)
                 c.execute("INSERT INTO `keys` VALUES (%s, %s)", (i, unique_key))
 
                 topic = test01.get_detail_topics(i)
@@ -43,9 +44,12 @@ def main():
                 writer.writerow(topic)
                 print("---ONE ITEM WAS WRITTEN TO CSV FILE---\n")
 
-        conn.commit()
+                conn.commit()
 
-    conn.close()
+        now = datetime.datetime.fromtimestamp(time.time())
+        writer.writerow("Last updated::{}".format(now))
+
+        conn.close()
 
 
 if __name__ == "__main__":
