@@ -1,11 +1,10 @@
 import MySQLdb
 import time
-import datetime
 import csv
 
-import test01
-import test02
-import test03
+import func01
+import func02
+import func03
 
 
 def main():
@@ -29,25 +28,30 @@ def main():
         #ヘッダーの出力
         writer.writeheader()
 
-        for i in test02.get_urls(first_page):
-            unique_key = test03.get_key(i)
+        for i in func02.get_urls(first_page):
+            unique_key = func03.get_key(i)
 
             a = c.execute("SELECT * FROM `keys` WHERE `key`=%s", (unique_key,))
 
             if a == 0:
-                time.sleep(0.5)
-                c.execute("INSERT INTO `keys` VALUES (%s, %s)", (i, unique_key))
+                #1s,1アクセス
+                time.sleep(1)
 
-                topic = test01.get_detail_topics(i)
+                #DBにkeyを格納する前に、nameのIndexErrorの判定を行うために順番変更
+                topic = func01.get_detail_topics(i)
 
-                #topicに対してcsv形式で書き出しを行う
-                writer.writerow(topic)
-                print("---ONE ITEM WAS WRITTEN TO CSV FILE---\n")
+                #test01での返り値のtypeの判定での条件分岐
+                if topic == str(topic):
+                    continue
 
-                conn.commit()
+                else:
+                    c.execute("INSERT INTO `keys` VALUES (%s, %s)", (i, unique_key))
 
-        now = datetime.datetime.fromtimestamp(time.time())
-        writer.writerow("Last updated::{}".format(now))
+                    #topicに対してcsv形式で書き出しを行う
+                    writer.writerow(topic)
+                    print("---ONE ITEM WAS WRITTEN TO CSV FILE---\n")
+
+                    conn.commit()
 
         conn.close()
 
