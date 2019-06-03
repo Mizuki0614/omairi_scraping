@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # omairi_scraping
 
 全国の神社仏閣の情報をomairi.comからデータ抽出をしたい。
@@ -100,3 +101,6 @@ omairi.comで
 →出力をDBではなく、ほかに考える
 
 →csvで実装、unique_kyeのみDB:`omairi`, TABLE:`keys`に格納
+=======
+# omairi_scraping
+>>>>>>> master
