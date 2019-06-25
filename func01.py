@@ -31,34 +31,28 @@ def get_detail_topics(personal_url):
         name_package = name.replace("\n", "").replace(" ", "")
         dict_omairi_info['[名称]'] = name_package
 
-        # [住所]は必須トピック
-        address_package = spot_item[0].text_content().replace("\n", "").replace(" ", "")
-        dict_omairi_info['[住所]'] = address_package
+        #branck(debug01)修正箇所
 
-        # list(spot_item)の要素iについて、
-        for i in spot_item:
-            try:
-                # 要素の子孫に"-"というテキストを含むdiv要素
-                phone_package = i.cssselect('div:contains("-")')[0].text_content().replace("\n", "").replace(" ", "")
+        #list[spot_item]の文字列のリストlist[spot_item_str]
+        spot_item_str = [s.text_content().replace("\n", "").replace(" ", "") for s in spot_item]
 
-                # 住所（address_package）も"-"を含む可能性がある
-                if phone_package == address_package:
-                    break
-                # 住所が"-"を含まなかった場合
-                else:
-                    dict_omairi_info['[電話番号]'] = phone_package
-            # iが電話番号（phone_package）ではなかった場合(IndexErrorを返す)
-            except IndexError:
-                # 要素の子孫に"http"というテキストを含むa要素
-                try:
-                    hp_url = i.cssselect('a:contains("http")')[0].text_content().replace("\n", "").replace(" ", "")
-                    dict_omairi_info['[URL]'] = hp_url
-                # iが電話番号でもURLでもなかった場合
-                except IndexError:
-                    # TOPIC:御朱印の有無　は、どのページにも必ず存在する（try文は書かない）
-                    goshuin_y_n = i.cssselect('div')[0].text_content().replace("\n", "").replace(" ", "")
-                    goshuin_y_n = goshuin_y_n.replace("御朱印:", "")
-                    dict_omairi_info['[御朱印の有無]'] = goshuin_y_n
+        for i in spot_item_str:
+            #この条件で住所が一意に認識できているか確認不十分
+            if ('都' in i) or ('道' in i) or ('府' in i) or ('県'in i):
+                address_package = i
+                dict_omairi_info['[住所]'] = address_package
+
+            if i.startswith('0'):
+                phone_package = i
+                dict_omairi_info['[電話番号]'] = phone_package
+
+            if i.startswith('http'):
+                hpurl_package = i
+                dict_omairi_info['[URL]'] = hpurl_package
+
+            if i.startswith('御朱印'):
+                goshuin_y_n = i
+                dict_omairi_info['[御朱印の有無]'] = goshuin_y_n
 
         # func(spot_ranking_info)について2項目
         popu_pre_package = spot_ranking_info(1) + spot_ranking_info(2)
@@ -83,7 +77,10 @@ def get_detail_topics(personal_url):
         return print(name_error)
 
 
-# ex)花園稲荷神社(https://omairi.club/spots/78003)
-# personal_url = "https://omairi.club/spots/78003"
+# # # ex)花園稲荷神社(https://omairi.club/spots/78003)
+# #  personal_url = "https://omairi.club/spots/78003"
+#
+# #不十分項目ありのURLの場合
+# personal_url = "https://omairi.club/spots/92605"
 #
 # print(get_detail_topics(personal_url))
