@@ -31,6 +31,7 @@ def get_detail_topics(personal_url):
         name_package = name.replace("\n", "").replace(" ", "")
         dict_omairi_info['[名称]'] = name_package
 
+        # [住所]は必須トピック
         address_package = spot_item[0].text_content().replace("\n", "").replace(" ", "")
         dict_omairi_info['[住所]'] = address_package
 
