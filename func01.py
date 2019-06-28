@@ -1,6 +1,11 @@
 import requests
 import lxml.html
 
+"""
+branch::topic05
+①omairi_crawler_mysql.pyに返すdictの名称をTABLEの名称と統一
+②項目なしに対してNULLの代入
+"""
 
 def get_detail_topics(personal_url):
     """
@@ -29,7 +34,7 @@ def get_detail_topics(personal_url):
     try:
         name = html.cssselect("div.spot_name > h1")[0].text_content()
         name_package = name.replace("\n", "").replace(" ", "")
-        dict_omairi_info['[名称]'] = name_package
+        dict_omairi_info['name'] = name_package
 
         #branck(debug01)修正箇所
 
@@ -40,35 +45,43 @@ def get_detail_topics(personal_url):
             #この条件で住所が一意に認識できているか確認不十分
             if ('都' in i) or ('道' in i) or ('府' in i) or ('県'in i):
                 address_package = i
-                dict_omairi_info['[住所]'] = address_package
+                dict_omairi_info['address'] = address_package
+            if not ('都' in i) or ('道' in i) or ('府' in i) or ('県'in i):
+                dict_omairi_info['address'] = 'NULL'
 
             if i.startswith('0'):
-                phone_package = i
-                dict_omairi_info['[電話番号]'] = phone_package
+                tel_package = i
+                dict_omairi_info['tel'] = tel_package
+            if not i.startswith('0'):
+                dict_omairi_info['tel'] = 'NULL'
 
             if i.startswith('http'):
-                hpurl_package = i
-                dict_omairi_info['[URL]'] = hpurl_package
+                hp_url_package = i
+                dict_omairi_info['hp_url'] = hp_url_package
+            if not i.startswith('http'):
+                dict_omairi_info['hp_url'] = 'NULL'
 
             if i.startswith('御朱印'):
-                goshuin_y_n = i
-                dict_omairi_info['[御朱印の有無]'] = goshuin_y_n
+                goshuin_yn = i
+                dict_omairi_info['goshuin_yn'] = goshuin_yn
+            if not i.startswith('御朱印'):
+                dict_omairi_info['goshuin_yn'] = 'NULL'
 
         # func(spot_ranking_info)について2項目
-        popu_pre_package = spot_ranking_info(1) + spot_ranking_info(2)
-        popu_all_package = spot_ranking_info(4) + spot_ranking_info(5)
-        dict_omairi_info['[寺社人気ランキング（都道府県）]'] = popu_pre_package
-        dict_omairi_info['[寺社人気ランキング（全国）]'] = popu_all_package
+        rank_pre_package = spot_ranking_info(1) + spot_ranking_info(2)
+        rank_all_package = spot_ranking_info(4) + spot_ranking_info(5)
+        dict_omairi_info['rank_pre'] = rank_pre_package
+        dict_omairi_info['rank_all'] = rank_all_package
 
         # func(eval_num)について2項目
-        access_package = eval_num(0) + "アクセス"
-        dict_omairi_info['[アクセス数]'] = access_package
+        access_count_package = eval_num(0) + "アクセス"
+        dict_omairi_info['access_count'] = access_count_package
 
-        photo_package = eval_num(1) + "件"
-        dict_omairi_info['[写真数]'] = photo_package
+        photo_count_package = eval_num(1) + "件"
+        dict_omairi_info['photo_count'] = photo_count_package
 
-        goshuin_url = personal_url + "/goshuin"
-        dict_omairi_info['[御朱印写真のURL]'] = goshuin_url
+        goshuin_photo_url = personal_url + "/goshuin"
+        dict_omairi_info['goshuin_photo_url'] = goshuin_photo_url
 
         return dict_omairi_info
 
