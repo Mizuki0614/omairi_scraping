@@ -5,6 +5,9 @@ import lxml.html
 branch::topic05
 ①omairi_crawler_mysql.pyに返すdictの名称をTABLEの名称と統一
 ②項目なしに対してNULLの代入
+未解決
+・omairi_crawler_mysql.pyに返すdictの要素をバラバラに(別々のTABLEに、分けて)利用したい
+・
 """
 
 def get_detail_topics(personal_url):
@@ -29,7 +32,8 @@ def get_detail_topics(personal_url):
         return html.cssselect("span.eval_num")[x].text_content()
 
     # 取得した情報を格納するdict:dict_omairi_info{}
-    dict_omairi_info = {}
+    # はじめに'NULL'を代入しておく
+    dict_omairi_info = {'address': 'NULL', 'tel': 'NULL', 'hp_url': 'NULL', 'goshuin_yn': 'NULL'}
 
     try:
         name = html.cssselect("div.spot_name > h1")[0].text_content()
@@ -46,26 +50,22 @@ def get_detail_topics(personal_url):
             if ('都' in i) or ('道' in i) or ('府' in i) or ('県'in i):
                 address_package = i
                 dict_omairi_info['address'] = address_package
-            if not ('都' in i) or ('道' in i) or ('府' in i) or ('県'in i):
-                dict_omairi_info['address'] = 'NULL'
+                continue
 
             if i.startswith('0'):
                 tel_package = i
                 dict_omairi_info['tel'] = tel_package
-            if not i.startswith('0'):
-                dict_omairi_info['tel'] = 'NULL'
+                continue
 
             if i.startswith('http'):
                 hp_url_package = i
                 dict_omairi_info['hp_url'] = hp_url_package
-            if not i.startswith('http'):
-                dict_omairi_info['hp_url'] = 'NULL'
+                continue
 
             if i.startswith('御朱印'):
                 goshuin_yn = i
                 dict_omairi_info['goshuin_yn'] = goshuin_yn
-            if not i.startswith('御朱印'):
-                dict_omairi_info['goshuin_yn'] = 'NULL'
+                continue
 
         # func(spot_ranking_info)について2項目
         rank_pre_package = spot_ranking_info(1) + spot_ranking_info(2)
@@ -91,8 +91,8 @@ def get_detail_topics(personal_url):
 
 
 # # # ex)花園稲荷神社(https://omairi.club/spots/78003)
-# #  personal_url = "https://omairi.club/spots/78003"
-#
+# # personal_url = "https://omairi.club/spots/78003"
+# #
 # #不十分項目ありのURLの場合
 # personal_url = "https://omairi.club/spots/92605"
 #
