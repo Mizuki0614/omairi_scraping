@@ -33,7 +33,7 @@ def get_detail_topics(personal_url):
 
     # 取得した情報を格納するdict:dict_omairi_info{}
     # はじめに'NULL'を代入しておく
-    dict_omairi_info = {'address': 'NULL', 'tel': 'NULL', 'hp_url': 'NULL', 'goshuin_yn': 'NULL'}
+    dict_omairi_info = {'address': None, 'tel': None, 'hp_url': None, 'goshuin_yn': None}
 
     try:
         name = html.cssselect("div.spot_name > h1")[0].text_content()

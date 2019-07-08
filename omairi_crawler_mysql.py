@@ -2,6 +2,7 @@
 branch::topic05
 ①omairi_crawler_mysql.pyに返すdictの名称をTABLEの名称と統一
 ②項目なしに対してNULLの代入
+→func01.py:: dict_omairi_info{}:keyを'NULL'→None
 ③モジュールをMySQLclientからmysql-connector-pythonライブラリに変更
 -----------------------------------------------------------------------------------------
 未解決
