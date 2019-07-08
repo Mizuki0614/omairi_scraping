@@ -1,34 +1,34 @@
 <<<<<<< HEAD
 # omairi_scraping
 
-‘S‘‚Ì_ŽÐ•§Št‚Ìî•ñ‚ðomairi.com‚©‚ç‚Ìƒf[ƒ^’Šo
+å…¨å›½ã®ç¥žç¤¾ä»é–£ã®æƒ…å ±ã‚’omairi.comã‹ã‚‰ã®ãƒ‡ãƒ¼ã‚¿æŠ½å‡º
 
 
-omairi.com( https://omairi.club/ )‚Å‚Ì
+omairi.com( https://omairi.club/ )ã§ã®
 
-[–¼Ì]
+[åç§°]   ---â†’   'name'
 
-[ZŠ]
+[ä½æ‰€]   ---â†’   'address'
 
-[Ž›ŽÐl‹Cƒ‰ƒ“ƒLƒ“ƒOi“s“¹•{Œ§j]
+[å¯ºç¤¾äººæ°—ãƒ©ãƒ³ã‚­ãƒ³ã‚°ï¼ˆéƒ½é“åºœçœŒï¼‰]   ---â†’   'rank_pre'
 
-[Ž›ŽÐl‹Cƒ‰ƒ“ƒLƒ“ƒOi‘S‘j]
+[å¯ºç¤¾äººæ°—ãƒ©ãƒ³ã‚­ãƒ³ã‚°ï¼ˆå…¨å›½ï¼‰]   ---â†’   'rank_all'
 
-[ƒAƒNƒZƒX”]
+[ã‚¢ã‚¯ã‚»ã‚¹æ•°]---â†’   'access_count'
 
-[ŽÊ^”]
+[å†™çœŸæ•°]   ---â†’   'photo_count'
 
-[“d˜b”Ô†]
+[é›»è©±ç•ªå·]   ---â†’   'tel'
 
-[URL]
+[URL]   ---â†’   'hp_url'
 
-[ŒäŽéˆó‚Ì—L–³]
+[å¾¡æœ±å°ã®æœ‰ç„¡]   ---â†’   'goshuin_yn'
 
-[ŒäŽéˆóŽÊ^‚ÌURL]
+[å¾¡æœ±å°å†™çœŸã®URL]   ---â†’   'goshuin_photo_url'
 
-‚Ì“Eo
+ã®æ‘˜å‡º
 
 
-ECSVŒ`Ž®‚Å‚Ìƒf[ƒ^‚Ì•Û‘¶(omairi_crawler_csv)
+ãƒ»CSVå½¢å¼ã§ã®ãƒ‡ãƒ¼ã‚¿ã®ä¿å­˜(omairi_crawler_csv)
 
-EDB(MySQL, DB='omairi', user='fine', passwd='fine', charset='utf8mb4')Œ`Ž®‚Å‚Ìƒf[ƒ^‚Ì•Û‘¶(omairi_crawler_mysql.py)
+ãƒ»DB(MySQL, DB='omairi', user='fine', passwd='fine', charset='utf8mb4')å½¢å¼ã§ã®ãƒ‡ãƒ¼ã‚¿ã®ä¿å­˜(omairi_crawler_mysql.py)
