@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # omairi_scraping
 
 全国の神社仏閣の情報をomairi.comからデータ抽出をしたい。
@@ -104,8 +105,14 @@ omairi.comで
 →出力をDBではなく、ほかに考える
 
 →csvで実装、unique_kyeのみDB:`omairi`, TABLE:`keys`に格納
+<<<<<<< HEAD
 
 --------------------------------------------------------
 
 上記での実装の結果、G列[電話番号]に、H列[URL]が流れ込んでいる箇所がある。
 GitBranch:debug01での修正、実装
+=======
+=======
+# omairi_scraping
+>>>>>>> master
+>>>>>>> master
