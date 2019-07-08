@@ -2,15 +2,17 @@
 branch::topic05
 ①omairi_crawler_mysql.pyに返すdictの名称をTABLEの名称と統一
 ②項目なしに対してNULLの代入
+→func01.py:: dict_omairi_info{}:keyを'NULL'→None
 ③モジュールをMySQLclientからmysql-connector-pythonライブラリに変更
 -----------------------------------------------------------------------------------------
 未解決
-・omairi_crawler_mysql.pyに返すdictの要素をバラバラに(別々のTABLEに、分けて)利用したい
+○omairi_crawler_mysql.pyに返すdictの要素をバラバラに(別々のTABLEに、分けて)利用したい
 →値の代入時にfunc01から受け取ったdictからkeyを指定して検索
-・テスト環境での実行において、MySQLdbのErrorがでる
+○テスト環境での実行において、MySQLdbのErrorがでる
 →以前、他環境で動いていたプログラムが動かない
 →sp1の環境構築から見直す *問題なし
 →/vagrant/practice mysql_test.pyの実行結果から、dictのINSERT時のERRORであることがわかった
+・
 ------------------------------------------------------------------------------------------
 
 """
