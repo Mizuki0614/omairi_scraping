@@ -4,7 +4,7 @@
 全国の神社仏閣の情報をomairi.comからのデータ抽出
 
 
-omairi.com(https://omairi.club/)での
+omairi.com( https://omairi.club/ )での
 
 [名称]
 
