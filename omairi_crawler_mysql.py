@@ -1,20 +1,7 @@
 """
-branch::topic05
-①omairi_crawler_mysql.pyに返すdictの名称をTABLEの名称と統一
-②項目なしに対してNULLの代入
-→func01.py:: dict_omairi_info{}:keyを'NULL'→None
-③モジュールをMySQLclientからmysql-connector-pythonライブラリに変更
------------------------------------------------------------------------------------------
-未解決
-○omairi_crawler_mysql.pyに返すdictの要素をバラバラに(別々のTABLEに、分けて)利用したい
-→値の代入時にfunc01から受け取ったdictからkeyを指定して検索
-○テスト環境での実行において、MySQLdbのErrorがでる
-→以前、他環境で動いていたプログラムが動かない
-→sp1の環境構築から見直す *問題なし
-→/vagrant/practice mysql_test.pyの実行結果から、dictのINSERT時のERRORであることがわかった
-・
-------------------------------------------------------------------------------------------
-
+branch::topic06
+詳細ページのクローリングを行う前にアイテムが既存かどうかの判定を行うコードの実装
+→動作未確認
 """
 
 import time
@@ -67,22 +54,30 @@ def main():
 
     for i in func02.get_urls(first_page):
 
-        time.sleep(1)
-
         ide_key = func03.get_key(i)
-        topic = func01.get_detail_topics(i)
 
-        c.execute("INSERT IGNORE INTO `keys` VALUES (%s, %s)", (ide_key, i))
+        # branch::topic06
+        # 詳細ページのクローリングを行う前にアイテムが既存かどうかの判定を行うコードの実装
 
-        c.execute("INSERT IGNORE INTO `omairi_topics` VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",\
-                  (ide_key, topic['name'], topic['address'], topic['tel'], topic['hp_url'],\
-                   topic['rank_pre'], topic['rank_all'], topic['access_count'], topic['photo_count']))
+        judge_already = c.execute("SELECT * FROM `keys` WHERE `key`=%s", (ide_key, ))
 
-        c.execute("INSERT IGNORE INTO `goshuin` VALUES (%s, %s, %s)",\
-                  (ide_key, topic['goshuin_yn'], topic['goshuin_photo_url']))
+        if judge_already == 0:
 
-        print("---ADDED ONE ITEM INTO THE TABLE---\n")
-        conn.commit()
+            time.sleep(1)
+
+            topic = func01.get_detail_topics(i)
+
+            c.execute("INSERT IGNORE INTO `keys` VALUES (%s, %s)", (ide_key, i))
+
+            c.execute("INSERT IGNORE INTO `omairi_topics` VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",\
+                      (ide_key, topic['name'], topic['address'], topic['tel'], topic['hp_url'],\
+                       topic['rank_pre'], topic['rank_all'], topic['access_count'], topic['photo_count']))
+
+            c.execute("INSERT IGNORE INTO `goshuin` VALUES (%s, %s, %s)",\
+                      (ide_key, topic['goshuin_yn'], topic['goshuin_photo_url']))
+
+            print("---ADDED ONE ITEM INTO THE DB---\n")
+            conn.commit()
 
     conn.close()
 
