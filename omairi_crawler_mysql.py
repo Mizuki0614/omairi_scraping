@@ -1,7 +1,8 @@
 """
 branch::topic06
-詳細ページのクローリングを行う前にアイテムが既存かどうかの判定を行うコードの実装
+・詳細ページのクローリングを行う前にアイテムが既存かどうかの判定を行うコードの実装
 →動作未確認
+・各TABLEの`key`に関する定義の変更、並びに一時各TABLEの削除
 """
 
 import time
@@ -25,13 +26,13 @@ def main():
     c = conn.cursor()
 
     c.execute("""CREATE TABLE IF NOT EXISTS `keys`(
-            `key` CHAR(5) NOT NULL,
+            `key` INT(10) NOT NULL,
             `url` VARCHAR(100) NOT NULL,
             PRIMARY KEY(`key`))
             """)
 
     c.execute("""CREATE TABLE IF NOT EXISTS `omairi_topics`(
-            `key` CHAR(5) NOT NULL,
+            `key` INT(10) NOT NULL,
             `name` VARCHAR(100) NOT NULL,
             `address` VARCHAR(255) NOT NULL,
             `tel` VARCHAR(20),
@@ -44,7 +45,7 @@ def main():
             """)
 
     c.execute("""CREATE TABLE IF NOT EXISTS `goshuin`(
-            `key` CHAR(5) NOT NULL,
+            `key` INT(10) NOT NULL,
             `goshuin_yn` VARCHAR(255),
             `goshuin_photo_url` VARCHAR(255) NOT NULL,
             PRIMARY KEY(`key`))
