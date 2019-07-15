@@ -23,7 +23,7 @@ def main():
         charset='utf8mb4'
     )
 
-    c = conn.cursor()
+    c = conn.cursor(buffered=True)
 
     c.execute("""CREATE TABLE IF NOT EXISTS `keys`(
             `key` INT(10) NOT NULL,
@@ -59,22 +59,27 @@ def main():
 
         # branch::topic06
         # 詳細ページのクローリングを行う前にアイテムが既存かどうかの判定を行うコードの実装
+        # jについて、TABLE::`keys`について、`key`が存在しない場合、Noneが得られる
 
-        judge_already = c.execute("SELECT * FROM `keys` WHERE `key`=%s", (ide_key, ))
+        c.execute("SELECT * FROM `keys` WHERE `key`=%s", (int(ide_key), ))
 
-        if judge_already == 0:
+        j = c.fetchone()
+
+        # print(j)
+
+        if j is None:
 
             time.sleep(1)
 
             topic = func01.get_detail_topics(i)
 
-            c.execute("INSERT IGNORE INTO `keys` VALUES (%s, %s)", (ide_key, i))
+            c.execute("INSERT INTO `keys` VALUES (%s, %s)", (ide_key, i))
 
-            c.execute("INSERT IGNORE INTO `omairi_topics` VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",\
+            c.execute("INSERT INTO `omairi_topics` VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",\
                       (ide_key, topic['name'], topic['address'], topic['tel'], topic['hp_url'],\
                        topic['rank_pre'], topic['rank_all'], topic['access_count'], topic['photo_count']))
 
-            c.execute("INSERT IGNORE INTO `goshuin` VALUES (%s, %s, %s)",\
+            c.execute("INSERT INTO `goshuin` VALUES (%s, %s, %s)",\
                       (ide_key, topic['goshuin_yn'], topic['goshuin_photo_url']))
 
             print("---ADDED ONE ITEM INTO THE DB---\n")
