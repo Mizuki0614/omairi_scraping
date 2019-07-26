@@ -1,6 +1,10 @@
 <<<<<<< HEAD
 # omairi_scraping
 
+
+Webクローリング,CSVでのデータの保存→Exelでの形式化,DB(MySQL)へのデータの格納,デバッグのリファレンス用プログラム
+
+
 全国の神社仏閣の情報をomairi.comからのデータ抽出
 
 
